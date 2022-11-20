@@ -1,28 +1,32 @@
 import './App.css';
+import { useEffect, useState } from 'react';
 import Search from './components/Search';
 import User from './components/User';
 
 const App = () => {
+
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch("https://api.github.com/users");
+      const users = await response.json();
+      setUsers(users);
+    }
+    fetchData()
+  }, []);
+
   return (
     <div className="App">
-      <Search/>
+      <Search />
       <div className="App-user-container">
-        <User
-          // key={user.login}
-          // img={user.avatar_url}
-          // name={user.login}
-          key="Lilla"
-          img="https://avatars.githubusercontent.com/u/6?v=4"
-          name="Lilla"
-        />
-         <User
-          // key={user.login}
-          // img={user.avatar_url}
-          // name={user.login}
-          key="Balint"
-          img="https://avatars.githubusercontent.com/u/6?v=4"
-          name="Balint"
-        />
+        {users.map(user =>
+          <User
+            key={user.login}
+            img={user.avatar_url}
+            name={user.login}
+          />
+        )}
       </div>
 
     </div>
