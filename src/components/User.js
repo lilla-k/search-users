@@ -13,7 +13,9 @@ const User = (props) => {
       <div
         className="User-name"
       >{props.name}</div>
-      <button>Show more</button>
+      <button
+        onClick={()=>props.onShowDetails(props.login)}
+      >Show more</button>
 
     </div>
   );

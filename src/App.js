@@ -2,10 +2,13 @@ import './App.css';
 import { useEffect, useState } from 'react';
 import Search from './components/Search';
 import User from './components/User';
+import UserDetails from './components/UserDetails';
+
 
 const App = () => {
 
   const [users, setUsers] = useState([]);
+  const [userDetails, setUserDetails] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -16,21 +19,37 @@ const App = () => {
     fetchData()
   }, []);
 
-  return (
-    <div className="App">
-      <Search />
-      <div className="App-user-container">
-        {users.map(user =>
-          <User
-            key={user.login}
-            img={user.avatar_url}
-            name={user.login}
-          />
-        )}
-      </div>
+  const onShowDetails = async (login) => {
+    const response = await fetch(`https://api.github.com/users/${login}`);
+    const userDetails = await response.json();
+    setUserDetails(userDetails);
+  }
 
+return (
+  <div className="App">
+    <Search />
+    <div className="App-user-container">
+      {users.map(user =>
+        <User
+          key={user.login}
+          login={user.login}
+          img={user.avatar_url}
+          name={user.login}
+          onShowDetails={onShowDetails}
+        />
+      )}
     </div>
-  );
+    {userDetails !== null && 
+    <UserDetails 
+      name={userDetails.login}
+      location={userDetails.location}
+      company={userDetails.company}
+      followers={userDetails.followers}
+      img={userDetails.avatar_url}
+    />}
+  </div>
+
+);
 }
 
 export default App;
