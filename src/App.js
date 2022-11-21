@@ -52,8 +52,8 @@ return (
         />
       )}
     </div>
-    {users.length === 0 && <div>Loading...</div>}
-    {filteredUsers.length === 0 && users.length !== 0 && <div>Nothing found</div>}
+    {users.length === 0 && <div id="loading">Loading...</div>}
+    {filteredUsers.length === 0 && users.length !== 0 && <div id="nothingFound">Nothing found</div>}
     {userDetails !== null && 
     <UserDetails 
       name={userDetails.login}

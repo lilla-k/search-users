@@ -3,11 +3,12 @@ import { useState } from 'react';
 import './User.css';
 
 const User = (props) => {
+  const [showRank, setShowRank] = useState(false);
+  let buttontext="Show rank";
+  showRank===false? buttontext="Show rank": buttontext="Not show rank"
 
-  const [buttontext, setButtonText] = useState("Show rank")
-
-  const showRankHander = () =>{
-    buttontext==="Show rank"? setButtonText("Not show rank"): setButtonText("Show rank")
+  const showRankHandler = () =>{
+    showRank===false? setShowRank(true): setShowRank(false);
   }
 
   return (
@@ -22,12 +23,13 @@ const User = (props) => {
         className="User-name"
       >{props.name}</div>
       <button
-        onClick={showRankHander}
-      >{buttontext}</button>
-      <button
         onClick={()=>props.onShowDetails(props.login)}
       >Show more</button>
-      {buttontext==="Not show rank" && <div>Rank: User</div>}
+      <button
+        onClick={showRankHandler}
+      >{buttontext}</button>
+      
+      {showRank===true && <div>Rank: User</div>}
 
     </div>
   );
