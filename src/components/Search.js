@@ -1,12 +1,13 @@
 import React from 'react';
 import './Search.css';
 
-const Search = () => {
+const Search = (props) => {
 
     return(
         <div className="Search-div">
              <input
-            placeholder="Search"
+                placeholder="Search"
+                onKeyUp={(event)=>props.onSearch(event.target.value)}
             />
         </div>
        

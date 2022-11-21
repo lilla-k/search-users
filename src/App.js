@@ -9,6 +9,7 @@ const App = () => {
 
   const [users, setUsers] = useState([]);
   const [userDetails, setUserDetails] = useState(null);
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     async function fetchData() {
@@ -29,11 +30,18 @@ const App = () => {
     setUserDetails(null);
   }
 
+  const onSearch = async (inputValue)=> {
+    setInputValue(inputValue);
+  }
+  const filteredUsers = users.filter(user => user.login.startsWith(inputValue));
+
 return (
   <div className="App">
-    <Search />
+    <Search 
+      onSearch={onSearch}
+    />
     <div className="App-user-container">
-      {users.map(user =>
+      {filteredUsers.map(user =>
         <User
           key={user.login}
           login={user.login}
@@ -43,6 +51,8 @@ return (
         />
       )}
     </div>
+    {users.length === 0 && <div>Loading...</div>}
+    {filteredUsers.length === 0 && users.length !== 0 && <div>Nothing found</div>}
     {userDetails !== null && 
     <UserDetails 
       name={userDetails.login}
