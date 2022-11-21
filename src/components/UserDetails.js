@@ -4,7 +4,7 @@ const UserDetails = (props) => {
   return (
     <div id="UserDetails-container">
       <div id="UserDetails">
-        <button id="closingButton" onClick={props.click}>X</button>
+        <button id="closingButton" onClick={props.onClose}>X</button>
         <img src={props.img} alt={props.name} />
         <div><strong>Name: </strong> {props.name}</div>
         <div><strong>Location: </strong>{props.location}</div>

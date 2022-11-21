@@ -26,7 +26,7 @@ const App = () => {
     setUserDetails(userDetails);
   }
 
-  const closingHandler = ()=> {
+  const onClose = ()=> {
     setUserDetails(null);
   }
 
@@ -61,7 +61,7 @@ return (
       company={userDetails.company}
       followers={userDetails.followers}
       img={userDetails.avatar_url}
-      click={closingHandler}
+      onClose={onClose}
     />}
   </div>
 
