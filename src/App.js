@@ -25,6 +25,10 @@ const App = () => {
     setUserDetails(userDetails);
   }
 
+  const closingHandler = ()=> {
+    setUserDetails(null);
+  }
+
 return (
   <div className="App">
     <Search />
@@ -46,6 +50,7 @@ return (
       company={userDetails.company}
       followers={userDetails.followers}
       img={userDetails.avatar_url}
+      click={closingHandler}
     />}
   </div>
 
