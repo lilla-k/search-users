@@ -10,20 +10,34 @@ const App = () => {
   const [users, setUsers] = useState([]);
   const [userDetails, setUserDetails] = useState(null);
   const [inputValue, setInputValue] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     async function fetchData() {
       const response = await fetch("https://api.github.com/users");
       const users = await response.json();
+      setLoading(false);
       setUsers(users);
     }
     fetchData()
   }, []);
 
   const onShowDetails = async (login) => {
-    const response = await fetch(`https://api.github.com/users/${login}`);
-    const userDetails = await response.json();
-    setUserDetails(userDetails);
+    setLoading(true);
+    try {
+      const response = await fetch(`https://api.github.com/users/${login}`);
+      const userDetails = await response.json();
+      setError(false);
+      setLoading(false)
+      setUserDetails(userDetails);
+    }
+    catch (error) {
+      console.log(`This was the ${error.message}`)
+      setLoading(false);
+      setError(true);
+    }
+    
   }
 
   const onClose = ()=> {
@@ -38,6 +52,8 @@ const App = () => {
 
 return (
   <div className="App">
+    {loading && <div id="loading">Loading...</div>}
+    {error && <div id="tryAgain">Try again...</div>}
     <Search 
       onSearch={onSearch}
     />
@@ -52,7 +68,7 @@ return (
         />
       )}
     </div>
-    {users.length === 0 && <div id="loading">Loading...</div>}
+    
     {filteredUsers.length === 0 && users.length !== 0 && <div id="nothingFound">Nothing found</div>}
     {userDetails !== null && 
     <UserDetails 
